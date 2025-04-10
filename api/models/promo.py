@@ -11,4 +11,4 @@ class Promo(Base):
     exp_date = Column(DATETIME, nullable=False, server_default=str(datetime.now()))
     code = Column(String(50))
 
-    orders = relationship("Order", back_populates="promos")
+    orders = relationship("Order", back_populates="promo")

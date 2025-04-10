@@ -16,7 +16,7 @@ class Order(Base):
     promo_id = Column(Integer, ForeignKey("promos.id"), nullable=True)
 
     customer = relationship("Customer", back_populates="orders")
-    order_items = relationship("OrderItem", back_populates="orders")
-    payment = relationship("Payment", back_populates="orders")
+    order_items = relationship("OrderItem", back_populates="order")
+    payment = relationship("Payment", back_populates="order")
     promo = relationship("Promo", back_populates="orders")
-    reviews = relationship("Review", back_populates="orders")
+    reviews = relationship("Review", back_populates="order")

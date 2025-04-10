@@ -12,4 +12,4 @@ class Payment(Base):
     amount = Column(DECIMAL)
     order_id = Column(Integer, ForeignKey("order.id"))
 
-    order = relationship("Order", back_populates="payments")
+    order = relationship("Order", back_populates="payment")
