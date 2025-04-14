@@ -2,14 +2,29 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, Response, Depends
 from ..models import orderitem as model
 from sqlalchemy.exc import SQLAlchemyError
+from api.models.order import Order
+# from ..schemas.menuitem import MenuItem
+from api.models.menuitem import MenuItem
 
 
 def create(db: Session, request):
+    order = db.query(Order).filter(Order.id == request.order_id).first()
+    if not order:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Order with ID {request.order_id} not found"
+        )
+    menuitem = db.query(MenuItem).filter(MenuItem.id == request.menuitem_id).first()
+    if not menuitem:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"MenuItem with ID {request.menuitem_id} not found"
+        )
     new_item = model.OrderItem(
         item=request.item,
         quantity=request.quantity,
-        # menu_item_id=request.menu_item_id,
-        # order_id=request.order_id
+        menuitem_id=request.menuitem_id,
+        order_id=request.order_id
     )
 
     try:

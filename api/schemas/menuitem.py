@@ -1,7 +1,7 @@
 from typing import List, Optional
 from pydantic import BaseModel
 # from .ingredients import Ingredient
-# from .order_items import OrderItem
+from .orderitem import OrderItem
 
 class MenuItemBase(BaseModel):
     name: str
@@ -27,6 +27,8 @@ class MenuItem(MenuItemBase):
     id: int
     # ingredients: List[int]
     # order_item_ids: List[int]
+    orderitem: Optional[OrderItem] = None
+
 
     class ConfigDict:
         from_attributes = True

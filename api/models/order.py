@@ -15,7 +15,10 @@ class Order(Base):
     # customer = relationship("Customer", back_populates="orders")
     # order_items = relationship("OrderItem", back_populates="order")
     # payment = relationship("Payment", back_populates="order", uselist=False)  # One-to-one
-
+    customer_id = Column(Integer, ForeignKey("customers.id"))
+    customer = relationship("Customer", back_populates="orders")
     review = relationship("Review", back_populates="order", uselist=False)
     promo_id = Column(Integer, ForeignKey("promos.id"), nullable=True)
     promo = relationship("Promo", back_populates="orders")
+    payments = relationship("Payment", back_populates="order", uselist=False)
+    orderitems = relationship("OrderItem", back_populates="order", cascade="all, delete-orphan")

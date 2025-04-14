@@ -3,8 +3,15 @@ from fastapi import HTTPException, status, Response, Depends
 from ..models import order as model
 from sqlalchemy.exc import SQLAlchemyError
 from api.models.promo import Promo
+from api.models.customer import Customer
 
 def create(db: Session, request):
+    customer = db.query(Customer).filter(Customer.id == request.customer_id).first()
+    if not customer:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Customer with ID {request.customer_id} not found"
+        )
     if request.promo_id is not None:
         promo = db.query(Promo).filter(Promo.id == request.promo_id).first()
         if not promo:
@@ -16,7 +23,7 @@ def create(db: Session, request):
         status=request.status,
         type=request.type,
         time_placed_DD_MM_YYYY=request.time_placed_DD_MM_YYYY,
-        # customer_id=request.customer_id,
+        customer_id=request.customer_id,
         promo_id = request.promo_id if hasattr(request, 'promo_id') else None
     )
 

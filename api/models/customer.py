@@ -18,3 +18,4 @@ class Customer(Base):
     # orders = relationship("Order", back_populates="customer", foreign_keys="[Order.customer_id]")
     # reviews = relationship("Review", back_populates="customer")
     reviews = relationship("Review", back_populates="customer", cascade="all, delete-orphan")
+    orders = relationship("Order", back_populates="customer", cascade="all, delete-orphan")

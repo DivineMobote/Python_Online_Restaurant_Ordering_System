@@ -13,3 +13,4 @@ class Ingredient(Base):
     #
     # menu_item = relationship("MenuItem", back_populates="ingredients")
 
+    recipes = relationship("Recipe", back_populates="ingredient")

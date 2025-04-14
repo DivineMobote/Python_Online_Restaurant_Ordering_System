@@ -9,9 +9,9 @@ class OrderItemBase(BaseModel):
 
 
 class OrderItemCreate(OrderItemBase):
-    # order_id: int
-    # menu_item_id: int
-    pass
+    order_id: int
+    menuitem_id: int
+
 class OrderItemUpdate(BaseModel):
     # order_id: Optional[int] = None
     # menu_item_id: Optional[int] = None
@@ -20,7 +20,8 @@ class OrderItemUpdate(BaseModel):
 
 class OrderItem(OrderItemBase):
     id: int
-    # order_id: int
+    order_id: int
+    menuitem_id: int
     # menu_item: MenuItem = None
 
     class ConfigDict:

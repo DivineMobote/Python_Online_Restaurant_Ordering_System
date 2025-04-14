@@ -1,7 +1,7 @@
 from typing import List, Optional
 from pydantic import BaseModel
 from .review import Review
-# from .orders import Order
+from .order import Order
 
 class CustomerBase(BaseModel):
     # id: int
@@ -33,6 +33,8 @@ class Customer(CustomerBase):
     # last_payment_id: Optional[int]
     # order_ids: List[int]
     review: Optional[Review] = None
+    order: Optional[Order] = None
+
     class Config:
         from_attributes = True
 

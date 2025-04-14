@@ -2,14 +2,22 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, Response, Depends
 from ..models import payment as model
 from sqlalchemy.exc import SQLAlchemyError
+from api.models.order import Order
 
 
 def create(db: Session, request):
+    if request.order_id is not None:
+        order = db.query(Order).filter(Order.id == request.order_id).first()
+        if not order:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Order with ID {request.Order_id} not found"
+            )
     new_item = model.Payment(
         completion_status=request.completion_status,
         type=request.type,
         amount=request.amount,
-        # order_id=request.order_id
+        order_id=request.order_id
     )
 
     try:
