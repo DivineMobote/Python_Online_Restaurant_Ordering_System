@@ -8,7 +8,7 @@ def create(db: Session, request):
     new_item = model.Ingredient(
         name=request.name,
         quantity=request.quantity,
-        menu_item_id=request.menu_item_id
+        # menu_item_id=request.menu_item_id
     )
 
     try:

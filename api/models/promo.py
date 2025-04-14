@@ -8,7 +8,7 @@ class Promo(Base):
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     discount = Column(DECIMAL)
-    exp_date = Column(DATETIME, nullable=False, server_default=str(datetime.now()))
+    exp_date_DD_MM_YYYY = Column(String(10))
     code = Column(String(50))
 
-    orders = relationship("Order", back_populates="promo")
+    # orders = relationship("Order", back_populates="promo")

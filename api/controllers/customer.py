@@ -10,8 +10,8 @@ def create(db: Session, request):
         phone =  request.phone,
         address =  request.address,
         is_guest=request.is_guest if hasattr(request, 'is_guest') else False,
-        last_order_id=request.last_order_id if hasattr(request, 'last_order_id') else None,
-        last_payment_id=request.last_order_id if hasattr(request, 'last_order_id') else None
+        # last_order_id=request.last_order_id if hasattr(request, 'last_order_id') else None,
+        # last_payment_id=request.last_order_id if hasattr(request, 'last_order_id') else None
 
     )
 

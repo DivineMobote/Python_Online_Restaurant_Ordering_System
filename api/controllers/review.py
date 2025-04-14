@@ -8,8 +8,8 @@ def create(db: Session, request):
     new_item = model.Review(
             rating=request.rating,
             comment=request.comment,
-            customer_id=request.customer_id,
-            order_id=request.order_id
+            # customer_id=request.customer_id,
+            # order_id=request.order_id
     )
 
     try:
