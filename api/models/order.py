@@ -11,10 +11,7 @@ class Order(Base):
     status = Column(String(50))
     type = Column(String(50))
     time_placed_DD_MM_YYYY = Column(String(10))
-    # customer_id = Column(Integer, ForeignKey("customers.id"))
-    # customer = relationship("Customer", back_populates="orders")
-    # order_items = relationship("OrderItem", back_populates="order")
-    # payment = relationship("Payment", back_populates="order", uselist=False)  # One-to-one
+
     customer_id = Column(Integer, ForeignKey("customers.id"))
     customer = relationship("Customer", back_populates="orders")
     review = relationship("Review", back_populates="order", uselist=False)

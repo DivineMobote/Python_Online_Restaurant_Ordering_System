@@ -11,12 +11,9 @@ class MenuItemBase(BaseModel):
     category: str
 
 class MenuItemCreate(MenuItemBase):
-    # order_item_ids: List[int]
-    # ingredient_ids: List[int]
     pass
 class MenuItemUpdate(BaseModel):
-    # order_item_ids: Optional[List[int]] = None
-    # ingredient_ids: Optional[List[int]] = None
+
     calories: Optional[int] = None
     name: Optional[str] = None
     price: Optional[float] = None
@@ -25,8 +22,6 @@ class MenuItemUpdate(BaseModel):
 
 class MenuItem(MenuItemBase):
     id: int
-    # ingredients: List[int]
-    # order_item_ids: List[int]
     orderitem: Optional[OrderItem] = None
 
 

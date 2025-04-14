@@ -14,8 +14,6 @@ class Customer(Base):
     is_guest = Column(Boolean, default=False)
     # last_order_id = Column(Integer, ForeignKey("orders.id"), nullable=True)
     # last_payment_id = Column(Integer, ForeignKey("payments.id"), nullable=True)
-    #
-    # orders = relationship("Order", back_populates="customer", foreign_keys="[Order.customer_id]")
-    # reviews = relationship("Review", back_populates="customer")
+
     reviews = relationship("Review", back_populates="customer", cascade="all, delete-orphan")
     orders = relationship("Order", back_populates="customer", cascade="all, delete-orphan")

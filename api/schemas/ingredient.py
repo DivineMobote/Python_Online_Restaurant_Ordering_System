@@ -16,8 +16,6 @@ class IngredientUpdate(BaseModel):
     quantity: Optional[int] = None
 class Ingredient(IngredientBase):
     id: int
-    # menu_item_ids: List[MenuItem]
-
 
     class ConfigDict:
         from_attributes = True

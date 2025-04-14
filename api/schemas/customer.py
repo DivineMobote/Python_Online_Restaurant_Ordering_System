@@ -4,14 +4,12 @@ from .review import Review
 from .order import Order
 
 class CustomerBase(BaseModel):
-    # id: int
     name: str
     phone: str
     address: str
     is_guest: bool
     # last_order_id: Optional[int] = None
     # last_payment_id: Optional[int] = None
-    # order_ids: Optional[List[int]] = None
 
 class CustomerCreate(CustomerBase):
     # last_order_id: Optional[int] = None
@@ -31,7 +29,6 @@ class Customer(CustomerBase):
     id: int
     # last_order_id: Optional[int]
     # last_payment_id: Optional[int]
-    # order_ids: List[int]
     review: Optional[Review] = None
     order: Optional[Order] = None
 

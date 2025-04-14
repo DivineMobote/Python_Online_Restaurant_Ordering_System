@@ -9,11 +9,7 @@ class Review(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     rating = Column(Integer)
     comment = Column(String(300))
-    # customer_id = Column(Integer, ForeignKey("customers.id"))
-    # order_id = Column(Integer, ForeignKey("orders.id"))
-    #
-    # customer = relationship("Customer", back_populates="reviews")
-    # order = relationship("Order", back_populates="reviews")
+
     customer_id = Column(Integer, ForeignKey("customers.id"))
     customer = relationship("Customer", back_populates="reviews")
     order_id = Column(Integer, ForeignKey("orders.id"), unique=True)

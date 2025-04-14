@@ -9,8 +9,5 @@ class Ingredient(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     name = Column(String(100))
     quantity = Column(Integer)
-    # menu_item_id = Column(Integer, ForeignKey("menu_items.id"))
-    #
-    # menu_item = relationship("MenuItem", back_populates="ingredients")
 
     recipes = relationship("Recipe", back_populates="ingredient")
