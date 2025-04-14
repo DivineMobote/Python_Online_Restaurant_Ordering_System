@@ -1,6 +1,6 @@
 from typing import List, Optional
 from pydantic import BaseModel
-# from .reviews import Review
+from .review import Review
 # from .orders import Order
 
 class CustomerBase(BaseModel):
@@ -11,7 +11,6 @@ class CustomerBase(BaseModel):
     is_guest: bool
     # last_order_id: Optional[int] = None
     # last_payment_id: Optional[int] = None
-    # review_ids: Optional[List[int]] = None
     # order_ids: Optional[List[int]] = None
 
 class CustomerCreate(CustomerBase):
@@ -32,9 +31,8 @@ class Customer(CustomerBase):
     id: int
     # last_order_id: Optional[int]
     # last_payment_id: Optional[int]
-    # review_ids: List[int]
     # order_ids: List[int]
-
+    review: Optional[Review] = None
     class Config:
         from_attributes = True
 

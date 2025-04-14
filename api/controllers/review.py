@@ -1,15 +1,31 @@
 from sqlalchemy.orm import Session
-from fastapi import HTTPException, status, Response, Depends
+from fastapi import HTTPException, status, Response, Depends, FastAPI
 from ..models import review as model
 from sqlalchemy.exc import SQLAlchemyError
+from api.models.customer import Customer
+from api.models.order import Order
 
+app = FastAPI()
 
 def create(db: Session, request):
+    customer = db.query(Customer).filter(Customer.id == request.customer_id).first()
+    if not customer:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Customer with ID {request.customer_id} not found"
+        )
+    order = db.query(Order).filter(Order.id == request.order_id).first()
+    if not order:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Order with ID {request.order_id} not found"
+        )
     new_item = model.Review(
             rating=request.rating,
             comment=request.comment,
-            # customer_id=request.customer_id,
-            # order_id=request.order_id
+            order_id=request.order_id,
+            customer_id=request.customer_id
+
     )
 
     try:

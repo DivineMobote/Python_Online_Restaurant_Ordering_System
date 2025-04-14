@@ -14,3 +14,7 @@ class Review(Base):
     #
     # customer = relationship("Customer", back_populates="reviews")
     # order = relationship("Order", back_populates="reviews")
+    customer_id = Column(Integer, ForeignKey("customers.id"))
+    customer = relationship("Customer", back_populates="reviews")
+    order_id = Column(Integer, ForeignKey("orders.id"), unique=True)
+    order = relationship("Order", back_populates="review")

@@ -2,15 +2,22 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, Response, Depends
 from ..models import order as model
 from sqlalchemy.exc import SQLAlchemyError
-
+from api.models.promo import Promo
 
 def create(db: Session, request):
+    if request.promo_id is not None:
+        promo = db.query(Promo).filter(Promo.id == request.promo_id).first()
+        if not promo:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Promo with ID {request.promo_id} not found"
+            )
     new_item = model.Order(
         status=request.status,
         type=request.type,
-        time_placed_DD_MM_YYYY=request.time_placed_DD_MM_YYYY
+        time_placed_DD_MM_YYYY=request.time_placed_DD_MM_YYYY,
         # customer_id=request.customer_id,
-        # promo_id = request.promo_id if hasattr(request, 'promo_id') else None
+        promo_id = request.promo_id if hasattr(request, 'promo_id') else None
     )
 
     try:

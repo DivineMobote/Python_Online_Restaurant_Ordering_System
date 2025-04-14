@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import List, Optional
 from pydantic import BaseModel
-# from .orders import Order
+from .order import Order
 
 class PromoBase(BaseModel):
     discount: float
@@ -18,7 +18,6 @@ class PromoUpdate(BaseModel):
 
 class Promo(PromoBase):
     id: int
-    # order_ids: List[Order]
-
+    order: Optional[Order] = None
     class ConfigDict:
         from_attributes = True

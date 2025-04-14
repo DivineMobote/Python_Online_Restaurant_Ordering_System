@@ -11,4 +11,4 @@ class Promo(Base):
     exp_date_DD_MM_YYYY = Column(String(10))
     code = Column(String(50))
 
-    # orders = relationship("Order", back_populates="promo")
+    orders = relationship("Order", back_populates="promo", cascade="all, delete-orphan")

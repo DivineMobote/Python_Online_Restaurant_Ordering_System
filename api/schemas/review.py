@@ -8,19 +8,18 @@ class ReviewBase(BaseModel):
     comment: str
 
 class ReviewCreate(ReviewBase):
-    # customer_id: int
-    # order_id: int
-    pass
+    order_id: int
+    customer_id: int
+
 class ReviewUpdate(BaseModel):
     rating: Optional[int] = None
     comment: Optional[str] = None
-    # customer_id: Optional[int] = None
     # order_id: Optional[int] = None
 
 class Review(ReviewBase):
     id: int
-    # customer_id: int
-    # order_id: int
+    order_id: int
+    customer_id: int
 
     class ConfigDict:
         from_attributes = True
