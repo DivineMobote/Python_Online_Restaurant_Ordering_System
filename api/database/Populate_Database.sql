@@ -1,0 +1,110 @@
+-- populate db
+
+USE sandwich_maker_api;
+
+-- INGREDIENTS
+INSERT INTO ingredients (name, quantity)
+VALUES
+('Bread', 100),
+('Bacon', 100),
+('Ham', 100),
+('Lettuce', 100),
+('Tomato', 100),
+('Cheese', 100),
+('Ketchup', 100),
+('Drink', 100),
+('Mayo', 100),
+('Turkey', 100),
+('Potatoes', 100);
+
+-- MENU ITEMS
+INSERT INTO menuitems (name, description, price, calories, category)
+VALUES
+('BLT', 'Bacon, Lettuce, Tomato Sandwich', 10.00, 200, 'Sandwich'),
+('Everything Sandwich', 'All Our Ingredients Under One Bun', 15.00, 400, 'Sandwich'),
+('Fries', 'French Fries', 3.00, 200, 'Sides'),
+('Drink', 'Pepsi and Coke Products', 2.50, 100, 'Drinks');
+
+-- RECIPES
+-- BLT
+INSERT INTO recipes (menuitem_id, ingredient_id, amount)
+VALUES
+(1, 1, 2),  -- Bread
+(1, 2, 3),  -- Bacon
+(1, 4, 1),  -- Lettuce
+(1, 5, 1);  -- Tomato
+
+-- Everything Sandwich
+INSERT INTO recipes (menuitem_id, ingredient_id, amount)
+VALUES
+(2, 1, 2),  -- Bread
+(2, 2, 2),  -- Bacon
+(2, 3, 2),  -- Ham
+(2, 4, 1),  -- Lettuce
+(2, 5, 1),  -- Tomato
+(2, 6, 2),  -- Cheese
+(2, 7, 1),  -- Ketchup
+(2, 9, 1),  -- Mayo
+(2, 10, 2); -- Turkey
+
+-- Fries
+INSERT INTO recipes (menuitem_id, ingredient_id, amount)
+VALUES
+(3, 11, 2), -- Potatoes
+(3, 7, 1); -- Ketchup
+
+-- Drink
+INSERT INTO recipes (menuitem_id, ingredient_id, amount)
+VALUES
+(4, 8, 1); -- Drink
+
+-- CUSTOMERS
+INSERT INTO customers (name, phone, address, is_guest)
+VALUES
+('John Doe', '7041111111', '1111 Road Rd', FALSE),
+('Jane Smith', '8282222222', '2222 Street Str', FALSE),
+('Brad Guest', '', '', TRUE); -- Guest
+
+-- ORDERS
+INSERT INTO orders (status, type, time_placed_DD_MM_YYYY, customer_id)
+VALUES
+('Completed', 'Takout', '25-04-2025', 1),
+('Pending', 'Takeout', '25-04-2025', 2),
+('Completed', 'Delivery', '25-04-2025', 3);
+
+-- ORDER ITEMS
+INSERT INTO orderitems (item, quantity, order_id, menuitem_id)
+VALUES
+('BLT', 2, 1, 1),  -- 2 BLTs for order 1
+('Everything Sandwich', 1, 2, 2),  -- 1 Everything Sandwich for order 2
+('Fries', 3, 3, 3);  -- 3 Fries for order 3
+
+-- PAYMENTS
+INSERT INTO payments (completion_status, type, amount, order_id)
+VALUES
+('Completed', 'Credit', 30.00, 1),  -- Payment for order 1
+('Pending', 'Cash', 15.00, 2),  -- Payment for order 2
+('Completed', 'Credit', 9.00, 3);  -- Payment for order 3
+
+-- PROMOS
+INSERT INTO promos (discount, exp_date_DD_MM_YYYY, code)
+VALUES
+(5.00, '31-05-2025', 'SPRINGSALE'),
+(10.00, '31-08-2025', 'SUMMERSALE');
+
+-- REVIEWS
+INSERT INTO reviews (rating, comment, customer_id, order_id)
+VALUES
+(5, 'Great', 1, 1),  -- Review for order 1 by customer 1
+(4, 'Good', 2, 2),  -- Review for order 2 by customer 2
+(3, 'Okay', 3, 3);  -- Review for order 3 by guest user
+
+SELECT * FROM ingredients;
+SELECT * FROM menuitems;
+SELECT * FROM recipes;
+SELECT * FROM customers;
+SELECT * FROM orders;
+SELECT * FROM orderitems;
+SELECT * FROM payments;
+SELECT * FROM promos;
+SELECT * FROM reviews;

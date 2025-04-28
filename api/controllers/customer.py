@@ -5,6 +5,12 @@ from sqlalchemy.exc import SQLAlchemyError
 
 
 def create(db: Session, request):
+    if not request.is_guest:
+        if not request.phone or not request.address:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Phone and address are required for non-guest customers."
+            )
     new_item = model.Customer(
         name = request.name,
         phone =  request.phone,

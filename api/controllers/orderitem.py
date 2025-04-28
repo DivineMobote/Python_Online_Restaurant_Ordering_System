@@ -5,6 +5,8 @@ from sqlalchemy.exc import SQLAlchemyError
 from api.models.order import Order
 # from ..schemas.menuitem import MenuItem
 from api.models.menuitem import MenuItem
+from api.models.recipe import Recipe
+from api.models.ingredient import Ingredient
 
 
 def create(db: Session, request):
@@ -30,6 +32,22 @@ def create(db: Session, request):
     try:
         db.add(new_item)
         db.commit()
+
+        recipes = db.query(Recipe).filter(Recipe.menuitem_id == menuitem.id).all()
+
+        for recipe in recipes:
+            ingredient = db.query(Ingredient).filter(Ingredient.id == recipe.ingredient_id).first()
+            if not ingredient:
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Ingredient not found!")
+
+            required_amount = recipe.amount * new_item.quantity
+            if ingredient.quantity < required_amount:
+                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Not enough ingredient stock.")
+
+            ingredient.quantity -= required_amount
+
+        db.commit()
+
         db.refresh(new_item)
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
