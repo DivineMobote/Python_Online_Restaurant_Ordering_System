@@ -20,7 +20,7 @@ def create(db: Session, request):
                 detail=f"Promo with ID {request.promo_id} not found"
             )
     new_item = model.Order(
-        status=request.status,
+        status="Pending",
         type=request.type,
         time_placed_DD_MM_YYYY=request.time_placed_DD_MM_YYYY,
         customer_id=request.customer_id,

@@ -8,7 +8,7 @@ class Order(Base):
     __tablename__ = "orders"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    status = Column(String(50))
+    status = Column(String(50), default="pending")
     type = Column(String(50))
     time_placed_DD_MM_YYYY = Column(String(10))
 

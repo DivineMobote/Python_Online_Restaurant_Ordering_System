@@ -3,6 +3,10 @@ from fastapi import HTTPException, status, Response, Depends
 from ..models import payment as model
 from sqlalchemy.exc import SQLAlchemyError
 from api.models.order import Order
+from api.models.orderitem import OrderItem
+from api.models.menuitem import MenuItem
+from datetime import date
+from api.models.promo import Promo
 
 
 def create(db: Session, request):
@@ -13,10 +17,53 @@ def create(db: Session, request):
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail=f"Order with ID {request.Order_id} not found"
             )
+
+        total_cost = 0
+        orderitems = db.query(OrderItem).filter(OrderItem.order_id == order.id).all()
+
+        for orderitem in orderitems:
+            menuitem = db.query(MenuItem).filter(MenuItem.id == orderitem.menuitem_id).first()
+            if menuitem:
+                total_cost += menuitem.price * orderitem.quantity
+            else:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail=f"Menu item with ID {orderitem.menuitem_id} not found"
+                )
+
+        total_cost = 0
+        for orderitem in order.orderitems:
+            menuitem = db.query(MenuItem).filter(
+                MenuItem.id == orderitem.menuitem_id).first()
+            if menuitem:
+                total_cost += menuitem.price * orderitem.quantity
+        if order.promo_id:
+            promo = db.query(Promo).filter(Promo.id == order.promo_id).first()
+            if promo:
+                today = date.today()
+                if promo.exp_date_YYYY_MM_DD >= today:
+                    print(f"Promo discount amount: {promo.discount}")
+                    total_cost -= promo.discount
+                    if total_cost < 0:
+                        total_cost = 0
+                    print(f"Total cost after promo: {total_cost}")
+                else:
+                    raise HTTPException(
+                        status_code=status.HTTP_400_BAD_REQUEST,
+                        detail="Promo code expired"
+                    )
+        if float(request.amount) != float(total_cost):
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Payment amount does not match the order total"
+            )
+        order.status = "Complete"
+        db.commit()
+        db.refresh(order)
     new_item = model.Payment(
-        completion_status=request.completion_status,
+        completion_status="Complete",
         type=request.type,
-        amount=request.amount,
+        amount=total_cost,
         order_id=request.order_id
     )
 

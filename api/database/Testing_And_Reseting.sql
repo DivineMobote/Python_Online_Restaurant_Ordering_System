@@ -12,5 +12,5 @@ TRUNCATE TABLE reviews;
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- reset all (usually not necessary)
-drop database sandwich_maker_api;
-create database sandwich_maker_api;
+-- drop database sandwich_maker_api;
+-- create database sandwich_maker_api;

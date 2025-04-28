@@ -68,9 +68,9 @@ VALUES
 -- ORDERS
 INSERT INTO orders (status, type, time_placed_DD_MM_YYYY, customer_id)
 VALUES
-('Completed', 'Takout', '25-04-2025', 1),
+('Complete', 'Takeout', '25-04-2025', 1),
 ('Pending', 'Takeout', '25-04-2025', 2),
-('Completed', 'Delivery', '25-04-2025', 3);
+('Complete', 'Delivery', '25-04-2025', 3);
 
 -- ORDER ITEMS
 INSERT INTO orderitems (item, quantity, order_id, menuitem_id)
@@ -82,15 +82,16 @@ VALUES
 -- PAYMENTS
 INSERT INTO payments (completion_status, type, amount, order_id)
 VALUES
-('Completed', 'Credit', 30.00, 1),  -- Payment for order 1
+('Complete', 'Card', 30.00, 1),  -- Payment for order 1
 ('Pending', 'Cash', 15.00, 2),  -- Payment for order 2
-('Completed', 'Credit', 9.00, 3);  -- Payment for order 3
+('Complete', 'Card', 9.00, 3);  -- Payment for order 3
 
 -- PROMOS
-INSERT INTO promos (discount, exp_date_DD_MM_YYYY, code)
+INSERT INTO promos (discount, exp_date_YYYY_MM_DD, code)
 VALUES
-(5.00, '31-05-2025', 'SPRINGSALE'),
-(10.00, '31-08-2025', 'SUMMERSALE');
+(7, '2024-12-31', '2024SALE'),
+(5, '2025-05-31', 'SPRINGSALE'),
+(3, '2025-08-31', 'SUMMERSALE');
 
 -- REVIEWS
 INSERT INTO reviews (rating, comment, customer_id, order_id)

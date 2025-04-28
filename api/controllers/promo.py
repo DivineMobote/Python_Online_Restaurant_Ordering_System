@@ -8,7 +8,7 @@ def create(db: Session, request):
     new_item = model.Promo(
         discount=request.discount,
         code=request.code,
-        exp_date_DD_MM_YYYY=request.exp_date_DD_MM_YYYY if hasattr(request, 'exp_date_DD_MM_YYYY') else None
+        exp_date_YYYY_MM_DD=request.exp_date_YYYY_MM_DD if hasattr(request, 'exp_date_YYYY_MM_DD') else None
     )
 
     try:

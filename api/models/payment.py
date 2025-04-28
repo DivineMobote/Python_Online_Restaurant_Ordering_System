@@ -7,7 +7,7 @@ class Payment(Base):
     __tablename__ = "payments"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    completion_status = Column(String(50))
+    completion_status = Column(String(50), default="pending")
     type = Column(String(50))
     amount = Column(DECIMAL)
 
