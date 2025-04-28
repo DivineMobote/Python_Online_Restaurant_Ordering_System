@@ -1,6 +1,6 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, DECIMAL, DATETIME, Boolean
 from sqlalchemy.orm import relationship
-from datetime import datetime
+from datetime import date
 from ..dependencies.database import Base
 
 
@@ -10,7 +10,7 @@ class Order(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     status = Column(String(50), default="pending")
     type = Column(String(50))
-    time_placed_DD_MM_YYYY = Column(String(10))
+    time_placed = Column(DATETIME, default=date.today)
 
     customer_id = Column(Integer, ForeignKey("customers.id"))
     customer = relationship("Customer", back_populates="orders")

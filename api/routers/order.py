@@ -3,6 +3,8 @@ from sqlalchemy.orm import Session
 from ..controllers import order as controller
 from ..schemas import order as schema
 from ..dependencies.database import engine, get_db
+from datetime import date
+from typing import Optional
 
 router = APIRouter(
     tags=['Orders'],
@@ -19,6 +21,13 @@ def create(request: schema.OrderCreate, db: Session = Depends(get_db)):
 def read_all(db: Session = Depends(get_db)):
     return controller.read_all(db)
 
+@router.get("/by-date-range/", response_model=list[schema.Order])
+def read_orders_by_date_range(
+    start_date: Optional[date] = None,
+    end_date: Optional[date] = None,
+    db: Session = Depends(get_db)
+):
+    return controller.read_by_date_range(db, start_date=start_date, end_date=end_date)
 
 @router.get("/{item_id}", response_model=schema.Order)
 def read_one(item_id: int, db: Session = Depends(get_db)):
@@ -33,3 +42,5 @@ def update(item_id: int, request: schema.OrderUpdate, db: Session = Depends(get_
 @router.delete("/{item_id}")
 def delete(item_id: int, db: Session = Depends(get_db)):
     return controller.delete(db=db, item_id=item_id)
+
+

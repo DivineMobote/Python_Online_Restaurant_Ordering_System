@@ -66,11 +66,11 @@ VALUES
 ('Brad Guest', '', '', TRUE); -- Guest
 
 -- ORDERS
-INSERT INTO orders (status, type, time_placed_DD_MM_YYYY, customer_id)
+INSERT INTO orders (status, type, time_placed, customer_id)
 VALUES
-('Complete', 'Takeout', '25-04-2025', 1),
-('Pending', 'Takeout', '25-04-2025', 2),
-('Complete', 'Delivery', '25-04-2025', 3);
+('Complete', 'Takeout', '2025-04-25', 1),
+('Pending', 'Takeout', '2025-04-25', 2),
+('Complete', 'Delivery', '2025-04-28', 3);
 
 -- ORDER ITEMS
 INSERT INTO orderitems (item, quantity, order_id, menuitem_id)

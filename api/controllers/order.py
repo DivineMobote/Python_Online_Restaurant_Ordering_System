@@ -4,6 +4,9 @@ from ..models import order as model
 from sqlalchemy.exc import SQLAlchemyError
 from api.models.promo import Promo
 from api.models.customer import Customer
+from datetime import date
+from typing import Optional
+
 
 def create(db: Session, request):
     customer = db.query(Customer).filter(Customer.id == request.customer_id).first()
@@ -22,7 +25,6 @@ def create(db: Session, request):
     new_item = model.Order(
         status="Pending",
         type=request.type,
-        time_placed_DD_MM_YYYY=request.time_placed_DD_MM_YYYY,
         customer_id=request.customer_id,
         promo_id = request.promo_id if hasattr(request, 'promo_id') else None
     )
@@ -83,3 +85,15 @@ def delete(db: Session, item_id):
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+def read_by_date_range(
+    db: Session,
+    start_date: Optional[date] = None,
+    end_date: Optional[date] = None
+):
+    query = db.query(model.Order)
+    if start_date:
+        query = query.filter(model.Order.time_placed >= start_date)
+    if end_date:
+        query = query.filter(model.Order.time_placed <= end_date)
+    return query.all()
