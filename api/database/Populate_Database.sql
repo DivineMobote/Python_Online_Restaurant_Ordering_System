@@ -18,12 +18,12 @@ VALUES
 ('Potatoes', 100);
 
 -- MENU ITEMS
-INSERT INTO menuitems (name, description, price, calories, category)
+INSERT INTO menuitems (name, description, price, calories, category,vegetarian, vegan, gluten_free)
 VALUES
-('BLT', 'Bacon, Lettuce, Tomato Sandwich', 10.00, 200, 'Sandwich'),
-('Everything Sandwich', 'All Our Ingredients Under One Bun', 15.00, 400, 'Sandwich'),
-('Fries', 'French Fries', 3.00, 200, 'Sides'),
-('Drink', 'Pepsi and Coke Products', 2.50, 100, 'Drinks');
+('BLT', 'Bacon, Lettuce, Tomato Sandwich', 10.00, 200, 'Sandwich',False,False,False),
+('Everything Sandwich', 'All Our Ingredients Under One Bun', 15.00, 400, 'Sandwich',False,False,False),
+('Fries', 'French Fries', 3.00, 200, 'Sides',True,True,False),
+('Drink', 'Pepsi and Coke Products', 2.50, 100, 'Drinks',True,True,True);
 
 -- RECIPES
 -- BLT

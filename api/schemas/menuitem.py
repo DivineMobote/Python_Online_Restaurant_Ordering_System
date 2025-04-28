@@ -9,6 +9,9 @@ class MenuItemBase(BaseModel):
     description: str
     calories: int
     category: str
+    vegetarian: bool = False
+    vegan: bool = False
+    gluten_free: bool = False
 
 class MenuItemCreate(MenuItemBase):
     pass
@@ -19,6 +22,9 @@ class MenuItemUpdate(BaseModel):
     price: Optional[float] = None
     description: Optional[str] = None
     category: Optional[str] = None
+    vegetarian: Optional[bool] = None
+    vegan: Optional[bool] = None
+    gluten_free: Optional[bool] = None
 
 class MenuItem(MenuItemBase):
     id: int

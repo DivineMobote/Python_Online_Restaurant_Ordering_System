@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DECIMAL
+from sqlalchemy import Column, Integer, String, DECIMAL,Boolean
 from sqlalchemy.orm import relationship
 from ..dependencies.database import Base
 
@@ -11,6 +11,9 @@ class MenuItem(Base):
     price = Column(DECIMAL(10, 2), nullable=False)
     calories = Column(Integer, nullable=True)
     category = Column(String(50), nullable=True)
+    vegetarian = Column(Boolean, default=False)
+    vegan = Column(Boolean, default=False)
+    gluten_free = Column(Boolean, default=False)
 
     recipes = relationship("Recipe", back_populates="menuitem", cascade="all, delete-orphan")
     orderitems = relationship("OrderItem", back_populates="menuitem", cascade="all, delete-orphan")

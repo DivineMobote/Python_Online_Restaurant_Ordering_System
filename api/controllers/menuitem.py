@@ -10,7 +10,10 @@ def create(db: Session, request):
     description = request.description,
     price = request.price,
     calories = request.calories,
-    category = request.category
+    category = request.category,
+    vegetarian=request.vegetarian,
+    vegan=request.vegan ,
+    gluten_free=request.gluten_free
     )
 
     try:
@@ -31,7 +34,6 @@ def read_all(db: Session):
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     return result
-
 
 def read_one(db: Session, item_id):
     try:
@@ -69,3 +71,29 @@ def delete(db: Session, item_id):
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+def filter_by_category(
+        db: Session,
+        vegetarian: bool = None,
+        vegan: bool = None,
+        gluten_free: bool = None,
+        category: str = None
+):
+    try:
+        query = db.query(model.MenuItem)
+
+        if vegetarian is not None:
+            query = query.filter(model.MenuItem.vegetarian == vegetarian)
+        if vegan is not None:
+            query = query.filter(model.MenuItem.vegan == vegan)
+        if gluten_free is not None:
+            query = query.filter(model.MenuItem.gluten_free == gluten_free)
+        if category:
+            query = query.filter(model.MenuItem.category == category)
+
+        result = query.all()
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+    return result
