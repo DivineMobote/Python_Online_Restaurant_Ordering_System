@@ -1,5 +1,9 @@
+from string import printable
+
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, Response, Depends
+
+import api.models.order
 from ..models import payment as model
 from sqlalchemy.exc import SQLAlchemyError
 from api.models.order import Order
@@ -7,6 +11,7 @@ from api.models.orderitem import OrderItem
 from api.models.menuitem import MenuItem
 from datetime import date
 from api.models.promo import Promo
+from typing import Optional
 
 
 def create(db: Session, request):
@@ -123,3 +128,21 @@ def delete(db: Session, item_id):
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+def get_revenue_by_date(db: Session, search_date: Optional[date] = None):
+    try:
+
+        payments = db.query(model.Payment).filter(
+            model.Payment.time_paid == search_date
+        ).all()
+        total_revenue = sum(payment.amount for payment in payments)
+        printable_revenue = f"${total_revenue:,.2f}"
+        if not search_date:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Please enter a valid date(YYYY-MM-DD)!")
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+    return {
+        "Date": search_date.isoformat(),
+        "Total_Revenue": printable_revenue
+    }
