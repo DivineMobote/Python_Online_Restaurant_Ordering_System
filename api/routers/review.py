@@ -13,6 +13,10 @@ router = APIRouter(
 def create(request: schema.ReviewCreate, db: Session = Depends(get_db)):
     return controller.create(db=db, request=request)
 
+@router.get("/sorted")
+def get_reviews_sorted(sort_by: str = None, db: Session = Depends(get_db)):
+    return controller.read_all_sorted(db, sort_by)
+
 @router.get("/", response_model=list[schema.Review])
 def read_all(db: Session = Depends(get_db)):
     return controller.read_all(db)
@@ -28,3 +32,5 @@ def update(item_id: int, request: schema.ReviewUpdate, db: Session = Depends(get
 @router.delete("/{item_id}")
 def delete(item_id: int, db: Session = Depends(get_db)):
     return controller.delete(db=db, item_id=item_id)
+
+

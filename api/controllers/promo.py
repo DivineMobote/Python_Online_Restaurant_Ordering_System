@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, Response, Depends
 from ..models import promo as model
 from sqlalchemy.exc import SQLAlchemyError
+from datetime import date
 
 
 def create(db: Session, request):
@@ -67,3 +68,21 @@ def delete(db: Session, item_id):
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+def apply_promo_code(db: Session, code: str):
+    promo = db.query(model.Promo).filter(model.Promo.code == code).first()
+
+    if not promo:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Promo code not found."
+        )
+
+    if promo.exp_date_YYYY_MM_DD and promo.exp_date_YYYY_MM_DD < date.today():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Promo code expired."
+        )
+
+    return promo

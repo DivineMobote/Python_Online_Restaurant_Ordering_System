@@ -29,6 +29,10 @@ def read_orders_by_date_range(
 ):
     return controller.read_by_date_range(db, start_date=start_date, end_date=end_date)
 
+@router.get("/filter")
+def filter_orders_by_type(order_type: str, db: Session = Depends(get_db)):
+    return controller.filter_by_type(db, order_type)
+
 @router.get("/{item_id}", response_model=schema.Order)
 def read_one(item_id: int, db: Session = Depends(get_db)):
     return controller.read_one(db, item_id=item_id)
@@ -42,5 +46,7 @@ def update(item_id: int, request: schema.OrderUpdate, db: Session = Depends(get_
 @router.delete("/{item_id}")
 def delete(item_id: int, db: Session = Depends(get_db)):
     return controller.delete(db=db, item_id=item_id)
+
+
 
 

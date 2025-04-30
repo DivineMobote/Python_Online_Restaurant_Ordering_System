@@ -84,3 +84,19 @@ def delete(db: Session, item_id):
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+def read_all_sorted(db: Session, sort_by: str = None):
+    try:
+        query = db.query(model.Review)
+
+        if sort_by == "rating":
+            query = query.order_by(model.Review.rating.desc())
+        elif sort_by == "date":
+            query = query.order_by(model.Review.created_at.desc())
+
+        return query.all()
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+

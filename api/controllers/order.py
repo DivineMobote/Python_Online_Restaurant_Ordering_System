@@ -97,3 +97,16 @@ def read_by_date_range(
     if end_date:
         query = query.filter(model.Order.time_placed <= end_date)
     return query.all()
+
+
+def filter_by_type(db: Session, order_type: str):
+    order_type = order_type.capitalize()
+    valid_types = ["Takeout", "Delivery"]
+    if order_type not in valid_types:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid order type. Must be 'Takeout' or 'Delivery'."
+        )
+
+    return db.query(model.Order).filter(model.Order.type == order_type).all()
+
