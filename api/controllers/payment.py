@@ -62,6 +62,14 @@ def create(db: Session, request):
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Payment amount does not match the order total"
             )
+
+        valid_payment_types = ["Cash", "Card"]
+        if request.type not in valid_payment_types:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Invalid payment type '{request.type}'. Must be 'Cash' or 'Card'."
+            )
+
         order.status = "Complete"
         db.commit()
         db.refresh(order)
