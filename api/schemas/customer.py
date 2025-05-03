@@ -1,5 +1,6 @@
 from typing import List, Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, validator
+import re
 from .review import Review
 from .order import Order
 
@@ -10,6 +11,24 @@ class CustomerBase(BaseModel):
     is_guest: bool
     # last_order_id: Optional[int] = None
     # last_payment_id: Optional[int] = None
+    
+    @validator('phone')
+    def validate_phone_number(cls, v):
+        """Validate phone number format"""
+        # Remove any non-digit characters for validation
+        digits_only = re.sub(r'\D', '', v)
+        
+        # Check if the result has a valid number of digits (10-15)
+        if len(digits_only) < 10 or len(digits_only) > 15:
+            raise ValueError('Phone number must have between 10 and 15 digits')
+        
+        # Optional: Check for specific country formats
+        # This example validates US numbers (10 digits)
+        if len(digits_only) == 10 and not digits_only.startswith(('0', '1')):
+            return v
+            
+        # For international numbers, just ensure it has enough digits
+        return v
 
 class CustomerCreate(CustomerBase):
     # last_order_id: Optional[int] = None
