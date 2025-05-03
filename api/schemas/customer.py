@@ -46,6 +46,20 @@ class CustomerBase(BaseModel):
             raise ValueError('Address should contain street and city, separated by commas')
             
         return v
+    
+    @validator('name')
+    def validate_name(cls, v):
+        """Validate name format"""
+        # Check that name contains only letters, spaces, hyphens, and apostrophes
+        if not re.match(r'^[a-zA-Z\s\'-]+$', v):
+            raise ValueError('Name should contain only letters, spaces, hyphens, and apostrophes')
+            
+        # Check that name has at least a first and last name
+        parts = v.strip().split()
+        if len(parts) < 2:
+            raise ValueError('Please provide both first and last name')
+            
+        return v
 
 class CustomerCreate(CustomerBase):
     # last_order_id: Optional[int] = None
