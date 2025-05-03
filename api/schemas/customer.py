@@ -29,6 +29,23 @@ class CustomerBase(BaseModel):
             
         # For international numbers, just ensure it has enough digits
         return v
+    
+    @validator('address')
+    def validate_address(cls, v):
+        """Validate address format and content"""
+        # Check for minimum content (should contain numbers and letters)
+        if not re.search(r'\d', v):
+            raise ValueError('Address should contain at least one number')
+        
+        if not re.search(r'[a-zA-Z]', v):
+            raise ValueError('Address should contain letters')
+        
+        # Basic sanity check for address parts
+        parts = v.split(',')
+        if len(parts) < 2:
+            raise ValueError('Address should contain street and city, separated by commas')
+            
+        return v
 
 class CustomerCreate(CustomerBase):
     # last_order_id: Optional[int] = None
