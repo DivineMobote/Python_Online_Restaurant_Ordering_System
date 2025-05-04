@@ -61,9 +61,9 @@ VALUES
 -- CUSTOMERS
 INSERT INTO customers (name, phone, address, is_guest)
 VALUES
-('John Doe', '7041111111', '1111 Road Rd', FALSE),
-('Jane Smith', '8282222222', '2222 Street Str', FALSE),
-('Brad Guest', '', '', TRUE); -- Guest
+('John Doe', '7041111111', '1111 Road Rd Charlotte, NC', FALSE),
+('Jane Smith', '8282222222', '2222 Street Str Charlotte, NC', FALSE),
+('Brad Guest', '55555555555', '2222 Street Str Charlotte, NC', TRUE); -- Guest
 
 -- ORDERS
 INSERT INTO orders (status, type, time_placed, customer_id)
@@ -80,11 +80,11 @@ VALUES
 ('Fries', 3, 3, 3);  -- 3 Fries for order 3
 
 -- PAYMENTS
-INSERT INTO payments (completion_status, type, amount, order_id)
+INSERT INTO payments (completion_status, type, amount, order_id,time_paid)
 VALUES
-('Complete', 'Card', 30.00, 1),  -- Payment for order 1
-('Pending', 'Cash', 15.00, 2),  -- Payment for order 2
-('Complete', 'Card', 9.00, 3);  -- Payment for order 3
+('Complete', 'Card', 30.00, 1,'2025-04-25'),  -- Payment for order 1
+('Pending', 'Cash', 15.00, 2,'2025-04-25'),  -- Payment for order 2
+('Complete', 'Card', 9.00, 3,'2025-04-25');  -- Payment for order 3
 
 -- PROMOS
 INSERT INTO promos (discount, exp_date_YYYY_MM_DD, code)
