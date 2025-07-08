@@ -34,6 +34,7 @@ Clone the repository:
 
 
 git clone https://github.com/DivineMobote/Python_Online_Restaurant_Ordering_System.git
+
 cd Python_Online_Restaurant_Ordering_System
 
 ---
