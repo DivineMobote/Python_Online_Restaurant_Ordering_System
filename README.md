@@ -73,7 +73,7 @@ Download and unzip the demo folder to view demonstration presentation.
 ## Project Information:
 * Course: ITSC 3155 - Software Engineering
 * Semster: Fall 2024
-* Team Members: Alejandro Murillo, Ayden Hocking, Deeksha Marpadaga, Shyam Pedibhotla
+* Team Members: Divine Mobote, Alejandro Murillo, Ayden Hocking, Deeksha Marpadaga, Shyam Pedibhotla
 
 
 
