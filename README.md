@@ -32,7 +32,7 @@ It allows customers to browse menus, place orders, and manage their carts. It al
 
 Clone the repository:
 
-```bash
+
 git clone https://github.com/DivineMobote/Python_Online_Restaurant_Ordering_System.git
 cd Python_Online_Restaurant_Ordering_System
 
@@ -47,7 +47,8 @@ cd Python_Online_Restaurant_Ordering_System
 * `pip install pytest-mock`
 * `pip install httpx`
 * `pip install cryptography`
-Or install from requirements.txt if available: pip install -r requirements.txt
+
+Or install from requirements.txt: pip install -r requirements.txt
 
 ---
 
